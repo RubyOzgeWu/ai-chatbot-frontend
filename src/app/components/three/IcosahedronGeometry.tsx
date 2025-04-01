@@ -10,7 +10,6 @@ export default function IcosahedronGeometry() {
     const container = containerRef.current;
     if (!container) return;
 
-    // 讀取 CSS 變數
     const getVarColor = (name: string) =>
       getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -31,55 +30,83 @@ export default function IcosahedronGeometry() {
       0.1,
       1000
     );
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // 降低資源壓力
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setClearColor(bgColor);
+    renderer.setClearColor(bgColor, 0);
     container.appendChild(renderer.domElement);
 
     const geometry = new THREE.IcosahedronGeometry(1, 0);
     const material = new THREE.MeshBasicMaterial({ vertexColors: true });
 
-    // 產生頂點顏色陣列（為每個面頂點調整顏色）
+    // 動態顏色
     const colors: number[] = [];
     const vertexCount = geometry.attributes.position.count;
-
     for (let i = 0; i < vertexCount; i++) {
-      const mixed = baseColor.clone().lerp(altColor, Math.random() * 0.4); // 混進一點 secondary 色
+      const mixed = baseColor.clone().lerp(altColor, Math.random() * 0.4);
       mixed.offsetHSL(0, 0, (Math.random() - 0.5) * 0.2);
       colors.push(mixed.r, mixed.g, mixed.b);
     }
 
     geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
-    camera.position.z = 5;
+    const fitCameraToObject = () => {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      const aspect = width / height;
 
+      camera.aspect = aspect;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+
+      const fov = camera.fov * (Math.PI / 180);
+      const objectSize = 2;
+      const verticalLimit = (objectSize / 2) / Math.tan(fov / 2);
+      const horizontalLimit = verticalLimit / aspect;
+      camera.position.z = Math.max(verticalLimit, horizontalLimit) * 1.4;
+    };
+
+    fitCameraToObject();
+
+    // 加入動畫取消控制
+    let frameId: number;
     const animate = () => {
-      requestAnimationFrame(animate);
-      mesh.rotation.x += 0.01;
-      mesh.rotation.y += 0.01;
+      frameId = requestAnimationFrame(animate);
+      mesh.rotation.x += 0.003;
+      mesh.rotation.y += 0.003;
       renderer.render(scene, camera);
     };
     animate();
 
-    const handleResize = () => {
-      if (!container) return;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
+    // resize 節流處理
+    let resizeTimeout: NodeJS.Timeout;
+    const onResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        fitCameraToObject();
+      }, 100);
     };
-
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", onResize);
       container.removeChild(renderer.domElement);
+
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
     };
   }, []);
 
-  return <div ref={containerRef} className="w-full h-full" />;
+  return (
+    <div
+      ref={containerRef}
+      className="w-full h-full relative overflow-hidden"
+    />
+  );
 }
+

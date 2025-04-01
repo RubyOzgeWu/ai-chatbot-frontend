@@ -64,8 +64,28 @@
   --color-black-90: var(--color-black-90);
   --color-black-100: var(--color-black-100);
 
-
+    /* Breakpoint */
+    --breakpoint-*: initial;
+    --breakpoint-sm: 48rem; /* 768px */
+    --breakpoint-md: 90rem; /* 1440px */
+    --breakpoint-lg: 120rem; /* 1920px */
 }
+
+@layer base {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+  h2 {
+    @apply text-3xl font-bold;
+  }
+  h3 {
+    @apply text-2xl font-bold;
+  }
+  h4 {
+    @apply text-xl font-bold;
+  }
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -74,8 +94,17 @@
   }
 }
 
-body {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
