@@ -64,11 +64,21 @@
   --color-black-90: var(--color-black-90);
   --color-black-100: var(--color-black-100);
 
-    /* Breakpoint */
-    --breakpoint-*: initial;
-    --breakpoint-sm: 48rem; /* 768px */
-    --breakpoint-md: 90rem; /* 1440px */
-    --breakpoint-lg: 120rem; /* 1920px */
+  /* font weight */
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-semibold:  var(--font-weight-semibold);
+  --font-weight-bold:  var(--font-weight-bold);
+
+  /* Breakpoint */
+  --breakpoint-*: initial;
+  --breakpoint-xs: 360px; 
+  --breakpoint-sm: 375px; /* iphone SE */
+  --breakpoint-md: 430px; /* iphone */
+  --breakpoint-lg: 768px; /* ipad */
+  --breakpoint-xl: 1024px; /* tablet */
+  --breakpoint-2xl: 1280px; /* desktop */
+  --breakpoint-3xl: 1536px; /* large desktop */
+
 }
 
 @layer base {
@@ -86,13 +96,13 @@
   }
 }
 
-
-@media (prefers-color-scheme: dark) {
+/* 切換深色模式 */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html, body {
   height: 100%;
@@ -101,10 +111,49 @@ html, body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  touch-action: none;
 }
+
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
+/* RWD */
+html{
+  font-size: 16px;
+}
+/* iPhone SE、超小螢幕（xs） */
+@media (max-width: 359px) {
+  html {
+    font-size: 14px; 
+  }
+}
+/* iPhone 14 Pro Max、android 高階手機 */
+@media (min-width: 430px) {
+  html {
+    font-size: 16px; 
+  }
+}
+/* 平板 */
+@media (min-width: 768px) {
+  html {
+    font-size: 17px; 
+  }
+}
+/* 桌機 */
+@media (min-width: 1024px) {
+  html {
+    font-size: 18px; 
+  }
+}
+/* 超寬螢幕 */
+@media (min-width: 1536px) {
+  html {
+    font-size: 19px; 
+  }
+}
+

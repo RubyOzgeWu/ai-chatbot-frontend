@@ -3,11 +3,15 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-export default function BackgroundParticles() {
+type Props = {
+  className?: string;
+};
+
+export default function BackgroundParticles({ className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const enableParticles = true; 
+    const enableParticles = true;
     if (!enableParticles) return;
 
     const container = containerRef.current;
@@ -163,8 +167,7 @@ export default function BackgroundParticles() {
   return (
     <div
       ref={containerRef}
-      className="absolute top-0 left-0 w-full h-full z-0"
+      className={`absolute top-0 left-0 w-full h-full z-0 ${className ?? ""}`}
     />
   );
 }
-

@@ -1,0 +1,16 @@
+.customInput{
+  padding: 0.5rem 0.75rem;
+}
+
+/* .customInput:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-black-20) inset !important;
+  background-color: var(--color-black-20) !important;
+} */
+
+/* .customPasswordInput input {
+  background-color: var(--color-black-20) !important;
+}
+.customPasswordInput input:-webkit-autofill, .customPasswordInput input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-black-20) inset !important;
+  background-color: var(--color-black-20) !important;
+} */
