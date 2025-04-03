@@ -4,6 +4,7 @@ import ThemeProvider from "./ThemeProvider.tsx";
 
 import "./styles/main.css";
 import "./styles/variables.css";
+import "./styles/global.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

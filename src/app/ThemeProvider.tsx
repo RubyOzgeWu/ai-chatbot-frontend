@@ -1,27 +1,51 @@
-'use client'
+"use client";
 
-import { ConfigProvider } from 'antd'
-import { useEffect, useState } from 'react'
+import { ConfigProvider } from "antd";
+import { useEffect, useState } from "react";
 
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
+export default function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [token, setToken] = useState({
-    colorPrimary: '#00C67A',
-    colorError: '#f44336',
-    colorWarning: '#ffd500',
-    colorSuccess: '#00C67A',
-  })
+    colorPrimary: "#00C67A",
+    colorError: "#f44336",
+    colorWarning: "#ffd500",
+    colorSuccess: "#00C67A",
+  });
 
   useEffect(() => {
     const getVar = (name: string) =>
-      getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+      getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
     setToken({
-      colorPrimary: getVar('--color-primary'),
-      colorError: getVar('--color-error'),
-      colorWarning: getVar('--color-warning'),
-      colorSuccess: getVar('--color-success'),
-    })
-  }, [])
+      colorPrimary: getVar("--color-primary"),
+      colorError: getVar("--color-error"),
+      colorWarning: getVar("--color-warning"),
+      colorSuccess: getVar("--color-success"),
+    });
+  }, []);
 
-  return <ConfigProvider theme={{ token }}>{children}</ConfigProvider>
+  return (
+    <ConfigProvider
+      theme={{
+        token, // 全域
+        components: {
+          Input: {
+            colorBgContainer: "var(--color-black-50)",
+            colorBorder: "var(--color-black-40)",
+            colorText:"var(--color-black-10)",
+            colorTextPlaceholder:"var(--color-black-40)",
+            fontSize: 16,
+          },
+          Button: {
+            borderRadius: "9999px",
+          },
+        },
+      }}
+    >
+      {children}
+    </ConfigProvider>
+  );
 }

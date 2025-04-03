@@ -3,7 +3,11 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-export default function IcosahedronGeometry() {
+type Props = {
+  className?: string;
+};
+
+export default function IcosahedronGeometry({ className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,9 +68,9 @@ export default function IcosahedronGeometry() {
 
       const fov = camera.fov * (Math.PI / 180);
       const objectSize = 2;
-      const verticalLimit = (objectSize / 2) / Math.tan(fov / 2);
+      const verticalLimit = objectSize / 2 / Math.tan(fov / 2);
       const horizontalLimit = verticalLimit / aspect;
-      camera.position.z = Math.max(verticalLimit, horizontalLimit) * 1.4;
+      camera.position.z = Math.max(verticalLimit, horizontalLimit) * 1.5;
     };
 
     fitCameraToObject();
@@ -105,8 +109,7 @@ export default function IcosahedronGeometry() {
   return (
     <div
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden"
+      className={`w-full h-full relative overflow-hidden ${className}`}
     />
   );
 }
-

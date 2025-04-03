@@ -50,4 +50,10 @@
     --color-black-80: #141415;
     --color-black-90: #101011;
     --color-black-100: #0c0c0d;
+
+    /* font weight */
+    --font-weight-normal: 400;
+    --font-weight-semibold: 500;
+    --font-weight-bold: 700;
+
 }
