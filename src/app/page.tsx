@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
-import { SendOutlined } from '@ant-design/icons';
+import { SendOutlined } from "@ant-design/icons";
 // import { Button } from "antd";
+
+import styles from "./page.module.css";
 
 import BackgroundParticles from "./components/three/BackgroundParticles.tsx";
 import IcosahedronGeometry from "./components/three/IcosahedronGeometry.tsx";
@@ -10,27 +12,28 @@ import ButtonComponent from "./components/basic/button/Button.tsx";
 // import FormLogin from "./components/home/FormLogin.tsx";
 
 export default function Home() {
-  /* 先建立 email, password 的 state */
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  /* 先建立 conversation 的 state */
+  const [conversation, setConversation] = useState("");
 
   const handleSubmit = () => {
-    if (!email || !password) {
-      alert("請輸入帳號與密碼");
-      return;
-    }
-    console.log("提交表單：", { email, password });
+    // if (!email || !password) {
+    //   alert("請輸入帳號與密碼");
+    //   return;
+    // }
+    console.log(conversation);
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       <BackgroundParticles />
-      <div className="relative z-10 flex flex-col items-center justify-items-center h-screen font-[family-name:var(--font-geist-sans)]">
+      <div className="relative z-10 flex flex-col items-center justify-items-center h-screen font-[family-name:var(--font-noto-sans)]">
         <main className="flex flex-col row-start-2 items-center w-full h-full justify-end">
-          <div className="w-full flex-1 flex flex-col justify-center p-16 md:px-18 md:py-20 ">
+          <div className="w-full flex-1 flex flex-col justify-center p-16 md:px-18 md:py-20 2xl:py-25">
             <div className="text-center text-white tracking-wide pb-6">
-              <h1>AskLexI</h1>
-              <h4 className="tracking-normal mt-2 font-light typing ">
+              <h1 className={`2xl:text-[2.65rem] ${styles["gradient-text"]}`}>
+                AskLexI
+              </h1>
+              <h4 className="tracking-normal mt-2 font-light typing">
                 智慧法律小助理，一問即答
               </h4>
             </div>
@@ -46,16 +49,21 @@ export default function Home() {
               className="flex gap-2 items-end"
             >
               <InputComponent
-                value={email}
+                value={conversation}
                 className="flex-2"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setConversation(e.target.value)}
                 placeholder="請輸入問題"
                 type="textarea"
                 size="large"
                 autoSize
               ></InputComponent>
 
-              <ButtonComponent htmlType="submit" shape="circle" size="large" className="mb-0.5">
+              <ButtonComponent
+                htmlType="submit"
+                shape="circle"
+                size="large"
+                className="mb-0.5"
+              >
                 <SendOutlined />
               </ButtonComponent>
 
