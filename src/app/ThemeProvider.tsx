@@ -35,12 +35,19 @@ export default function ThemeProvider({
           Input: {
             colorBgContainer: "var(--color-black-50)",
             colorBorder: "var(--color-black-40)",
-            colorText:"var(--color-black-10)",
-            colorTextPlaceholder:"var(--color-black-40)",
+            colorText: "var(--color-black-10)",
+            colorTextPlaceholder: "var(--color-black-40)",
             fontSize: 16,
           },
           Button: {
             borderRadius: "9999px",
+          },
+          Card: {
+            colorBgContainer: "var(--color-black-30)",
+            colorBorder: "var(--color-black-30)",
+            colorText: "var(--color-black-60)",
+            fontSize: 16,
+            bodyPadding: 12,
           },
         },
       }}
