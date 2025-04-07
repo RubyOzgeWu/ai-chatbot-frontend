@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import styles from "./page.module.css";
 
@@ -113,8 +114,12 @@ export default function Home() {
                       )}
 
                       {isAssistant && (
-                        <div className="text-black-30 text-[16px]">
-                          <ReactMarkdown>{conversation.content}</ReactMarkdown>
+                        <div
+                          className={`text-black-30 text-[16px] ${styles["markdown-table"]}`}
+                        >
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {conversation.content}
+                          </ReactMarkdown>
                         </div>
                       )}
                     </div>
