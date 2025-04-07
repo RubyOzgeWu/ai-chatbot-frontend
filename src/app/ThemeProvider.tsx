@@ -47,7 +47,6 @@ export default function ThemeProvider({
             colorBorder: "var(--color-black-30)",
             colorText: "var(--color-black-60)",
             fontSize: 16,
-            bodyPadding: 12,
           },
         },
       }}

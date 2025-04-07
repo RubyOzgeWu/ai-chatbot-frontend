@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 
 import styles from "./page.module.css";
 
@@ -98,15 +99,23 @@ export default function Home() {
                       key={index}
                     >
                       {isUser && (
-                        <Card className="max-w-[60%]">
+                        <Card
+                          className="max-w-[60%]"
+                          bodyStyle={{
+                            paddingTop: 12,
+                            paddingBottom: 12,
+                            paddingLeft: 14,
+                            paddingRight: 14,
+                          }}
+                        >
                           {conversation.content}
                         </Card>
                       )}
 
                       {isAssistant && (
-                        <p className="text-black-30 text-[16px]">
-                          {conversation.content}
-                        </p>
+                        <div className="text-black-30 text-[16px]">
+                          <ReactMarkdown>{conversation.content}</ReactMarkdown>
+                        </div>
                       )}
                     </div>
                   );
