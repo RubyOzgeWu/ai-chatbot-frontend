@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import axios from "axios";
 
@@ -12,10 +12,21 @@ import InputComponent from "./components/basic/input/Input.tsx";
 import ButtonComponent from "./components/basic/button/Button.tsx";
 import Card from "./components/basic/card/Card.tsx";
 
+const AutoScroll = ({ triggerDeps }: { triggerDeps: [] }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [...triggerDeps]);
+
+  return <div ref={scrollRef} />;
+};
+
 export default function Home() {
   /* 先建立 conversation 的 state */
   const [conversations, setConversation] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   /* 提交輸入對話 */
   const handleSubmit = async () => {
@@ -29,6 +40,7 @@ export default function Home() {
 
     setConversation((prev) => [...prev, userMessage]);
     setInputValue("");
+    setLoading(true);
 
     try {
       // API 請求
@@ -43,9 +55,10 @@ export default function Home() {
         content: response.data.llm_response,
       };
       setConversation((prev) => [...prev, assistantMessage]);
-
     } catch (error) {
       console.error("資料獲取失敗", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,6 +111,15 @@ export default function Home() {
                     </div>
                   );
                 })}
+
+                {loading && (
+                  <div className="flex justify-start mb-8">
+                    <p className="max-w-[60%] animate-pulse">
+                      <span className="text-gray-500">Lexi 正在思考中...</span>
+                    </p>
+                  </div>
+                )}
+                <AutoScroll triggerDeps={[conversations, loading]} />
               </div>
             </div>
           )}
