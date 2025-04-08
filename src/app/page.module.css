@@ -1,0 +1,43 @@
+/* .gradient-text {
+  background: linear-gradient(75deg, rgba(255,255,255,1) 40%, rgba(112,208,188,1) 60%, rgba(79,165,190,1) 81%, rgba(38,113,192,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+.gradient-text {
+  background: linear-gradient(75deg, rgba(255,255,255,1) 40%, rgba(112,208,188,1) 60%, rgba(79,165,190,1) 81%, rgba(38,113,192,1) 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 5s ease infinite;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 40% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 40% 50%;
+  }
+}
+
+.markdown-table table {
+  border-collapse: collapse;
+  border: 1px solid var(--color-black-40);
+  width: 100%;
+}
+
+.markdown-table th,
+.markdown-table td {
+  border: 1px solid var(--color-black-40);
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.markdown-table th{
+  background: var(--color-black-50);
+}
