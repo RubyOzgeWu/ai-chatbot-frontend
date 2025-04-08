@@ -40,7 +40,7 @@ export default function ThemeProvider({
             fontSize: 16,
           },
           Button: {
-            borderRadius: "9999px",
+            borderRadius: 9999,
           },
           Card: {
             colorBgContainer: "var(--color-black-30)",
