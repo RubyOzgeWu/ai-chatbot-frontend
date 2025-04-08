@@ -10,7 +10,9 @@ type InputProps = {
   type?: string;
   autoSize?: boolean | { minRows?: number; maxRows?: number };
   size?: "small" | "middle" | "large";
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 };
 
 const { TextArea } = Input;

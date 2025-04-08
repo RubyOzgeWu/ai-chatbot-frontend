@@ -7,27 +7,36 @@ import remarkGfm from "remark-gfm";
 
 import styles from "./page.module.css";
 
-import Background from "./components/Background.tsx";
-import BackgroundParticles from "./components/three/BackgroundParticles.tsx";
-import IcosahedronGeometry from "./components/three/IcosahedronGeometry.tsx";
-import InputComponent from "./components/basic/input/Input.tsx";
-import ButtonComponent from "./components/basic/button/Button.tsx";
-import Card from "./components/basic/card/Card.tsx";
+import Background from "./components/Background";
+import BackgroundParticles from "./components/three/BackgroundParticles";
+import IcosahedronGeometry from "./components/three/IcosahedronGeometry";
+import InputComponent from "./components/basic/input/Input";
+import ButtonComponent from "./components/basic/button/Button";
+import Card from "./components/basic/card/Card";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const AutoScroll = ({ triggerDeps }: { triggerDeps: [] }) => {
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+type AutoScrollProps = {
+  triggerDeps?: React.DependencyList;
+};
+
+const AutoScroll = ({ triggerDeps = [] }: AutoScrollProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [...triggerDeps]);
-
+  }, triggerDeps);
+  
   return <div ref={scrollRef} />;
 };
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Home() {
   /* 先建立 conversation 的 state */
-  const [conversations, setConversation] = useState([]);
+  const [conversations, setConversation] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +45,7 @@ export default function Home() {
     console.log("提交");
     if (!inputValue.trim()) return;
 
-    const userMessage = {
+    const userMessage: Message = {
       role: "user",
       content: inputValue,
     };
@@ -53,10 +62,11 @@ export default function Home() {
       });
 
       // AI 回應加入 conversation
-      const assistantMessage = {
+      const assistantMessage: Message = {
         role: "assistant",
         content: response.data.llm_response,
       };
+
       setConversation((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("資料獲取失敗", error);

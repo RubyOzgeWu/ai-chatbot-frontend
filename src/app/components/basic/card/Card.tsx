@@ -1,9 +1,9 @@
 import { Card } from "antd";
 
 type cardProps = {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
-  bodyStyle?: CSSProperties;
+  bodyStyle?: React.CSSProperties;
 };
 
 export default function UserQuery({
