@@ -14,6 +14,7 @@ import InputComponent from "./components/basic/input/Input.tsx";
 import ButtonComponent from "./components/basic/button/Button.tsx";
 import Card from "./components/basic/card/Card.tsx";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const AutoScroll = ({ triggerDeps }: { triggerDeps: [] }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +47,7 @@ export default function Home() {
 
     try {
       // API 請求
-      const response = await axios.post("/api/conversations", {
+      const response = await axios.post(`${baseUrl}/api/conversations`, {
         role: "user",
         content: inputValue,
       });
