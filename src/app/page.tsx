@@ -65,7 +65,7 @@ export default function Home() {
       // AI 回應加入 conversation
       const assistantMessage = {
         role: "assistant",
-        content: response.llm_response,
+        content: response.assistant_message.content,
       };
       setConversation((prev) => [...prev, assistantMessage]);
     } catch (error) {
