@@ -27,17 +27,18 @@ type AutoScrollProps = {
 
 const AutoScroll = ({ triggerDeps = [] }: AutoScrollProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, triggerDeps);
 
   return <div ref={scrollRef} />;
 };
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Home() {
   /* 先建立 conversation 的 state */
-  const [conversations, setConversation] = useState([]);
+  const [conversations, setConversation] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +47,7 @@ export default function Home() {
     console.log("提交");
     if (!inputValue.trim()) return;
 
-    const userMessage = {
+    const userMessage: Message = {
       role: "user",
       content: inputValue,
     };
@@ -63,10 +64,11 @@ export default function Home() {
       });
 
       // AI 回應加入 conversation
-      const assistantMessage = {
+      const assistantMessage: Message = {
         role: "assistant",
         content: response.assistant_message.content,
       };
+
       setConversation((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("資料獲取失敗", error);

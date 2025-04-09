@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
-import ThemeProvider from "./ThemeProvider.tsx";
+import ThemeProvider from "./ThemeProvider";
 
 import "./styles/main.css";
 import "./styles/variables.css";
