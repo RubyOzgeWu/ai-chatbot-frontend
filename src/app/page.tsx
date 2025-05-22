@@ -34,7 +34,7 @@ const AutoScroll = ({ triggerDeps = [] }: AutoScrollProps) => {
 
   return <div ref={scrollRef} />;
 };
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Home() {
   /* 先建立 conversation 的 state */
