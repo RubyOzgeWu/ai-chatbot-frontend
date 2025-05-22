@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { SendOutlined } from "@ant-design/icons";
-import axios from "axios";
+// import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -14,7 +14,7 @@ import InputComponent from "./components/basic/input/Input";
 import ButtonComponent from "./components/basic/button/Button";
 import Card from "./components/basic/card/Card";
 
-import { postConversation } from "./features/api/api.ts";
+import { postConversation } from "./features/api/api";
 
 type Message = {
   role: "user" | "assistant";
@@ -27,7 +27,7 @@ type AutoScrollProps = {
 
 const AutoScroll = ({ triggerDeps = [] }: AutoScrollProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, triggerDeps);
