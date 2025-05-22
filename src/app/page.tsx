@@ -14,6 +14,8 @@ import InputComponent from "./components/basic/input/Input";
 import ButtonComponent from "./components/basic/button/Button";
 import Card from "./components/basic/card/Card";
 
+import { postConversation } from "./features/api/api.ts";
+
 type Message = {
   role: "user" | "assistant";
   content: string;
@@ -29,10 +31,10 @@ const AutoScroll = ({ triggerDeps = [] }: AutoScrollProps) => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, triggerDeps);
-  
+
   return <div ref={scrollRef} />;
 };
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Home() {
   /* 先建立 conversation 的 state */
@@ -56,7 +58,7 @@ export default function Home() {
 
     try {
       // API 請求
-      const response = await axios.post(`${baseUrl}/api/conversations`, {
+      const response = await postConversation({
         role: "user",
         content: inputValue,
       });
@@ -64,7 +66,7 @@ export default function Home() {
       // AI 回應加入 conversation
       const assistantMessage: Message = {
         role: "assistant",
-        content: response.data.llm_response,
+        content: response.assistant_message.content,
       };
 
       setConversation((prev) => [...prev, assistantMessage]);
